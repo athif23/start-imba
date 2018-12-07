@@ -29,6 +29,5 @@ A generator to create new [Imba](https://github.com/imba/imba) project
 - Create more option for the app, so people can choose tools they want to use with imba.
 
 - Make the app more cool and fast.
-<<<<<<< HEAD
 
 - Make the `template/` better.
