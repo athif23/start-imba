@@ -2,7 +2,7 @@
 
 # start-imba
 
-A generator to create new [Imba](https://github.com/imba/imba) workspace
+A generator to create new [Imba](https://github.com/imba/imba) project
 
 > This project is still in development. If you really want to use it follow commands below:
 
