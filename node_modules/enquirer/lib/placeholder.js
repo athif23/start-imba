@@ -1,0 +1,53 @@
+'use strict';
+
+const colors = require('ansi-colors');
+const utils = require('./utils');
+
+/**
+ * Render a placeholder value with cursor and styling based on the
+ * position of the cursor.
+ *
+ * @param {Object} `prompt` Prompt instance.
+ * @param {String} `input` Input string.
+ * @param {String} `initial` The initial user-provided value.
+ * @param {Number} `pos` Current cursor position.
+ * @param {Boolean} `showCursor` Render a simulated cursor using the inverse primary style.
+ * @return {String} Returns the styled placeholder string.
+ * @api public
+ */
+
+module.exports = (prompt, options = {}) => {
+  prompt.cursorHide();
+
+  let { input = '', initial = '', pos, showCursor = true, color } = options;
+  let style = color || prompt.styles.placeholder;
+  let inverse = utils.inverse(prompt.styles.primary);
+  let reverse = str => inverse(colors.black(str));
+  let output = input;
+
+  if (showCursor && pos === 0 && (input === initial || input === '')) {
+    return reverse(initial[0]) + style(initial.slice(1));
+  }
+
+  initial = utils.isPrimitive(initial) ? `${initial}` : '';
+  input = utils.isPrimitive(input) ? `${input}` : '';
+
+  let placeholder = initial && initial.startsWith(input) && initial !== input;
+  let cursor = placeholder ? reverse(initial[input.length]) : inverse(' ');
+
+  if (pos !== input.length && showCursor === true) {
+    output = input.slice(0, pos) + reverse(input[pos]) + input.slice(pos + 1);
+    cursor = '';
+  }
+
+  if (showCursor === false) {
+    cursor = '';
+  }
+
+  if (placeholder) {
+    let raw = colors.unstyle(output + cursor);
+    return output + cursor + style(initial.slice(raw.length));
+  }
+
+  return output + cursor;
+};
