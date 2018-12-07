@@ -2,7 +2,7 @@
   "name": "start-imba",
   "version": "1.0.0",
   "description": "A tool like CRA but for Imba",
-  "main": "index.js",
+  "main": "./index.js",
   "author": "At Indo",
   "bin": {
     "start-imba": "./index.js"
@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "commander": "^2.19.0",
-    "enquirer": "^2.1.1"
+    "enquirer": "^2.1.1",
+    "chalk": "1.1.3"
   }
 }
