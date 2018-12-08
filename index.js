@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+
+/**
+ * All the thing here is inspired by https://github.com/facebook/create-react-app/blob/master/packages/create-react-app/createReactApp.js.
+ * I did not own any code here, I just write it.
+ */
+
 const validateProjectName = require("validate-npm-package-name");
 const chalk = require("chalk");
 const commander = require("commander");
@@ -13,7 +19,7 @@ const boxen = require('boxen');
 const CURR_DIR = process.cwd();
 
 const packageJson = require("./package.json");
-const templatePackage = require("./template-package.json");
+const templatePackage = require("./package-webpack.json");
 
 const CHOICES = fs.readdirSync(`${__dirname}/templates`);
 
@@ -38,6 +44,7 @@ const QUESTIONS = [
 
 let projectName;
 let authorName;
+
 const program = new commander.Command(packageJson.name)
   .version(packageJson.version)
   .description("A generator to create new Imba workspace")
@@ -180,44 +187,6 @@ function shouldUseYarn() {
   }
 }
 
-function checkNpmVersion() {
-  let hasMinNpm = false;
-  let npmVersion = null;
-  try {
-    npmVersion = execSync("npm --version")
-      .toString()
-      .trim();
-    hasMinNpm = semver.gte(npmVersion, "3.0.0");
-  } catch (err) {
-    // ignore
-  }
-  return {
-    hasMinNpm: hasMinNpm,
-    npmVersion: npmVersion
-  };
-}
-
-function checkYarnVersion() {
-  let hasMinYarnPnp = false;
-  let yarnVersion = null;
-  try {
-    yarnVersion = execSync("yarnpkg --version")
-      .toString()
-      .trim();
-    let trimmedYarnVersion = /^(.+?)[-+].+$/.exec(yarnVersion);
-    if (trimmedYarnVersion) {
-      trimmedYarnVersion = trimmedYarnVersion.pop();
-    }
-    hasMinYarnPnp = semver.gte(trimmedYarnVersion || yarnVersion, "1.12.0");
-  } catch (err) {
-    // ignore
-  }
-  return {
-    hasMinYarnPnp: hasMinYarnPnp,
-    yarnVersion: yarnVersion
-  };
-}
-
 function run(root, appName, dependencies, devDependencies, useYarn) {
   console.log("Installing dependencies. This for sure will take a couple of minutes. Prepare yourself!");
   const originalDirectory = process.cwd();
@@ -270,9 +239,6 @@ function checkThatNpmCanReadCwd() {
   try {
     childOutput = spawn.sync('npm', ['config', 'list']).output.join('');
   } catch (err) {
-    // Something went wrong spawning node.
-    // Not great, but it means we can't do this check.
-    // We might fail later on, but let's continue.
     return true;
   }
   if (typeof childOutput !== 'string') {
@@ -283,7 +249,6 @@ function checkThatNpmCanReadCwd() {
   const prefix = '; cwd = ';
   const line = lines.find(line => line.indexOf(prefix) === 0);
   if (typeof line !== 'string') {
-    // Fail gracefully. They could remove it.
     return true;
   }
   const npmCWD = line.substring(prefix.length);
