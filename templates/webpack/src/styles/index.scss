@@ -1,0 +1,29 @@
+// Get App Component's style
+@import 'App';
+
+@import url('https://fonts.googleapis.com/css?family=Gothic+A1:400,700|Black+Han+Sans|Inconsolata:700');
+
+:root {
+	--header-font: 'Black Han Sans', sans-serif;
+	--copy-font: 'Gothic A1', sans-serif;
+	--code-font: 'Inconsolata', monospace;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	font-family: var(--header-font);
+}
+
+body {
+	font-family: var(--copy-font);
+	font-weight: regular;
+	margin: 0;
+	padding: 0;
+	h1{
+		padding: 0;
+		margin: 0;
+	}
+}
+
+code {
+	font-family: var(--code-font);
+}

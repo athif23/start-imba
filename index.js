@@ -19,7 +19,8 @@ const boxen = require('boxen');
 const CURR_DIR = process.cwd();
 
 const packageJson = require("./package.json");
-const templatePackage = require("./package-webpack.json");
+const webpackPackages = require("./package-webpack.json");
+const parcelPackages = require("./package-parcel.json");
 
 const CHOICES = fs.readdirSync(`${__dirname}/templates`);
 
@@ -45,6 +46,13 @@ const QUESTIONS = [
 let projectName;
 let authorName;
 
+function cancelCommand(msg){
+  console.log();
+  console.error(chalk.red(msg));
+  console.log();
+  process.exit();
+}
+
 const program = new commander.Command(packageJson.name)
   .version(packageJson.version)
   .description("A generator to create new Imba workspace")
@@ -52,27 +60,38 @@ const program = new commander.Command(packageJson.name)
   .usage(`${chalk.green("<project-directory>")} [options]`)
   .option("--use-npm", "use npm to install package instead of yarn", 'use')
   .action(function(name, cmd) {
+    if (fs.existsSync(CURR_DIR + "/" + name)){
+      cancelCommand(`Commands canceled! That name already exist.\nTry change the name of your project.`);
+    }
     checkAppName(name);
     enquirer.prompt(QUESTIONS).then(answers => {
+      if(answers["bundler"] === undefined){
+        cancelCommand(`Commands canceled!`);
+      } else if (answers["username"] === undefined){
+        cancelCommand(`Commands canceled!`);
+      } else if(answers["install"] === undefined){
+        cancelCommand(`Commands canceled!`);
+      }
       const projectChoice = answers["bundler"];
       const projectAuthor = answers["username"];
       const install = answers["install"];
-      if (projectChoice === "with-parcel") {
-        console.log("Sorry, parcel's template still in progress.");
-        console.log("You can use webpack for now.");
-        console.log();
-        process.exit(1);
-      } else {
-        const templatePath = `${__dirname}/templates/${projectChoice}`;
-        fs.mkdirSync(`${CURR_DIR}/${name}`);
-        authorName = projectAuthor;
-        projectName = name;
-        let useNpm = cmd.useNpm === "use" ? true : false;
-        createDirectoryContents(templatePath, name);
-        createPackageJson(projectName, authorName, useNpm, install);
-      }
+      const templatePath = `${__dirname}/templates/${projectChoice}`;
+      fs.mkdirSync(`${CURR_DIR}/${name}`);
+      authorName = projectAuthor;
+      projectName = name;
+      let useNpm = cmd.useNpm === "use" ? true : false;
+      createDirectoryContents(templatePath, name);
+      createPackageJson(projectName, authorName, useNpm, install, projectChoice);
     });
   });
+
+process.on('unhandledRejection', (reason, p) => {
+  console.log();
+  console.error(chalk.red(`Commands canceled! Something went wrong.`));
+  console.log();
+  console.log(reason);
+  process.exit();
+});
 
 function printValidationResults(results) {
   if (typeof results !== "undefined") {
@@ -108,7 +127,7 @@ function createDirectoryContents(templatePath, newProjectPath) {
   });
 }
 
-function createPackageJson(name, authorName, useNpm, installPk) {
+function createPackageJson(name, authorName, useNpm, installPk, pkg) {
   const root = path.resolve(name);
   const appName = path.basename(root);
 
@@ -117,30 +136,24 @@ function createPackageJson(name, authorName, useNpm, installPk) {
   console.log(`Starting to create a new Imba project in ${chalk.green(root)}.`);
   console.log();
 
+  const packagesToInstall = pkg === "parcel" ? parcelPackages : webpackPackages;
+
   const packageJson = {
     name: appName,
     version: "0.1.0",
     author: authorName,
     private: true,
-    ...templatePackage
+    ...packagesToInstall
   };
 
   fs.writeFileSync(
     path.join(root, "package.json"),
     JSON.stringify(packageJson, null, 2) + os.EOL
   );
-  const dependencies = [];
-  const devDependencies = [];
-  for (let key in templatePackage.dependencies) {
-    dependencies.push(key);
-  }
-  for (let key in templatePackage.devDependencies) {
-    devDependencies.push(key);
-  }
 
   const useYarn = useNpm ? false : shouldUseYarn();
   if (installPk === true){
-    run(root, appName, dependencies, devDependencies, useYarn);
+    run(root, appName, useYarn, pkg);
   }else{
     console.log('Project created!');
     console.log();
@@ -187,18 +200,33 @@ function shouldUseYarn() {
   }
 }
 
-function run(root, appName, dependencies, devDependencies, useYarn) {
+function run(root, appName, useYarn, pkg) {
   console.log("Installing dependencies. This for sure will take a couple of minutes. Prepare yourself!");
   const originalDirectory = process.cwd();
   process.chdir(root);
   if (!useYarn && !checkThatNpmCanReadCwd()) {
     process.exit(1);
   }
+  let manager;
+  let msg;
+  if(useYarn){
+    manager = "yarn";
+  }else{
+    manager = "npm";
+  }
+  const webpackMsg = `All Packages Installed!\n\nYou can type '${manager} run dev' to start webpack server.\n  The server will be available in localhost:8080`;
+  const parcelMsg = `All Packages Installed!\n\nYou can type '${manager} start' to start parcel server.\n  The server will be available in localhost:1234`;
   console.log();
-  install(root, useYarn, dependencies, false).then(() => {
-    console.log();
-    console.log(boxen("All Packages Installed!\n\nYou can type 'npm run dev' to start webpack server.\n  The server will be available in localhost:8080", {padding: 1, borderStyle: 'classic'}));
-    console.log();
+  install(root, useYarn, false).then(() => {
+    if(useYarn){ 
+      console.log();
+      console.log(boxen(webpackMsg, {padding: 1, borderStyle: 'classic'}));
+      console.log();
+    }else{
+      console.log();
+      console.log(boxen(parcelMsg, {padding: 1, borderStyle: 'classic'}));
+      console.log();
+    }
   });
 }
 
