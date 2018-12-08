@@ -1,4 +1,4 @@
-<img src="https://github.com/athif23/start-imba/blob/master/logo/imba-logo.png" alt="Logo from https://github.com/iamtirado" width="200"/>
+<img src="./images/imba-logo.png" alt="Logo from https://github.com/iamtirado" width="200"/>
 
 # start-imba
 
@@ -13,11 +13,19 @@ A generator to create a new [Imba](https://github.com/imba/imba) project
 > Make sure you already have NodeJS installed on your pc.
 
 - Open your terminal.
+
 - Run `git clone https://github.com/athif23/start-imba.git`
+
 - Install the dependencies `cd start-imba && npm install`
+
 - Install the app globally `npm install -g ./`
-- Now you can run, `start-imba <yourappname>`
+
+- Now you can run, `start-imba <yourappname>`. 
+
+  > By default it's using `yarn`, you can option to install using npm with `--use-npm`.
+
 - Select bundler you will use. `webpack` or `parcel`.
+
 - And, continue until the end.
 
 
