@@ -1,43 +1,27 @@
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+let ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-	module: {
-		rules: [
-			{
-				test: /\.imba$/,
-				loader: 'imba/loader',
-			},
-			{
-				test:/\.(s*)css$/,
-				use: [
-					{
-						loader: 'file-loader',
-						options: {
-							name: '[name].css'
-						}
-					},
-					{
-						loader: 'extract-loader'
-					},
-					{
-						loader: 'css-loader',
-						options: { minimize: true }
-					},
-					{
-						loader: 'sass-loader'
-					}
-				]
-			}
-		]
-	},
-	resolve: {
-		extensions: [".imba",".js",".json"]
-	},
-	entry: ["./src/client.imba", "./src/styles/index.scss"],
-	output: {  path: __dirname + '/dist', filename: "client.js" },
-	plugins: [
-    new UglifyJsPlugin({
-			test: /\.js($|\?)/i
-		})
+  module: {
+    rules: [
+      {
+        test: /\.imba$/,
+        loader: 'imba/loader',
+      },
+      {
+        test: /\.scss$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader']
+        })
+      }
+    ],
+  },
+  resolve: {
+    extensions: [".imba", ".js", ".json", ".scss"]
+  },
+  entry: ["./src/index.imba", "./src/styles/index.scss"],
+  output: {  path: __dirname + '/dist', filename: "client.js" },
+  plugins: [
+    new ExtractTextPlugin('index.css')
   ]
 }
