@@ -214,17 +214,19 @@ function run(root, appName, useYarn, pkg) {
   }else{
     manager = "npm";
   }
-  const webpackMsg = `All Packages Installed!\n\nYou can type '${manager} run dev' to start webpack server.\n  The server will be available in localhost:8080`;
-  const parcelMsg = `All Packages Installed!\n\nYou can type '${manager} start' to start parcel server.\n  The server will be available in localhost:1234`;
+
+  const webpackMsg = `All Packages Installed!\n\nType ${chalk.red(`'cd ${appName} && ${manager} run dev'`)} to get inside \nthe app folder and start webpack server.\n\nThe server will be available in localhost:8080`;
+  const parcelMsg = `All Packages Installed!\n\nType ${chalk.red(`'cd ${appName} && ${manager} start'`)} to get inside \nthe app folder and start parcel server.\n\nThe server will be available in localhost:1234`;
   console.log();
+
   install(root, useYarn, false).then(() => {
-    if(useYarn){ 
+    if(pkg === "parcel"){ 
       console.log();
-      console.log(boxen(webpackMsg, {padding: 1, borderStyle: 'classic'}));
+      console.log(boxen(parcelMsg, {padding: 1, borderStyle: 'classic'}));
       console.log();
     }else{
       console.log();
-      console.log(boxen(parcelMsg, {padding: 1, borderStyle: 'classic'}));
+      console.log(boxen(webpackMsg, {padding: 1, borderStyle: 'classic'}));
       console.log();
     }
   });
