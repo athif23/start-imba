@@ -12,7 +12,7 @@ const enquirer = require("enquirer");
 const fs = require("fs-extra");
 const path = require("path");
 const semver = require("semver");
-const { exec, execSync } = require("child_process");
+const execSync = require("child_process");
 const spawn = require('cross-spawn');
 const os = require('os');
 const boxen = require('boxen');
@@ -53,12 +53,13 @@ function cancelCommand(msg){
   process.exit();
 }
 
+
 const program = new commander.Command(packageJson.name)
   .version(packageJson.version)
   .description("A generator to create new Imba workspace")
   .arguments("<project-directory>")
   .usage(`${chalk.green("<project-directory>")} [options]`)
-  .option("--use-npm", "use npm to install package instead of yarn", 'use')
+  .option("-N, --use-npm", "use npm to install package instead of yarn", 'use')
   .action(function(name, cmd) {
     if (fs.existsSync(CURR_DIR + "/" + name)){
       cancelCommand(`Commands canceled! That name already exist.\nTry change the name of your project.`);
@@ -174,7 +175,6 @@ function checkAppName(appName) {
     process.exit(1);
   }
 
-  // TODO: there should be a single place that holds the dependencies
   const dependencies = ["imba", "imba-router"].sort();
   if (dependencies.indexOf(appName) >= 0) {
     console.error(
@@ -201,7 +201,7 @@ function shouldUseYarn() {
 }
 
 function run(root, appName, useYarn, pkg) {
-  console.log("Installing dependencies. This for sure will take a couple of minutes. Prepare yourself!");
+  console.log("Installing dependencies. This might take a couple of minutes. Prepare yourself!");
   const originalDirectory = process.cwd();
   process.chdir(root);
   if (!useYarn && !checkThatNpmCanReadCwd()) {
@@ -215,8 +215,9 @@ function run(root, appName, useYarn, pkg) {
     manager = "npm";
   }
 
-  const webpackMsg = `All Packages Installed!\n\nType ${chalk.red(`'cd ${appName} && ${manager} run dev'`)} to get inside \nthe app folder and start webpack server.\n\nThe server will be available in localhost:8080`;
-  const parcelMsg = `All Packages Installed!\n\nType ${chalk.red(`'cd ${appName} && ${manager} start'`)} to get inside \nthe app folder and start parcel server.\n\nThe server will be available in localhost:1234`;
+  const webpackMsg = `Packages has been installed, folder has been created!\n\nYou can start by typing: \n\n   ${chalk.blue(`cd`)} ${appName}\n   ${chalk.blue(`${manager} start`)}\n\nNow, time to make webapps that fly!`;
+  const parcelMsg = `Packages has been installed, folder has been created!\n\nYou can start by typing: \n\n   ${chalk.blue(`cd`)} ${appName}\n   ${chalk.blue(`${manager} start`)}\n\nNow, time to make webapps that fly!`;
+
   console.log();
 
   install(root, useYarn, false).then(() => {
