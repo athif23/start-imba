@@ -11,6 +11,6 @@
     "parcel-plugin-imba": "^0.1.2"
   },
   "dependencies": {
-    "imba": "1.4.1"
+    "imba": "1.4.3"
   }
 }
