@@ -1,10 +1,14 @@
 {
   "name": "start-imba",
   "version": "0.1.0",
-  "description": "start-imba CLI",
-  "private": true,
+  "description": "Project generator for imba",
+  "license": "MIT",
   "bin": {
     "start-imba": "bin/start-imba"
+  },
+  "engines": {
+    "node": ">=8",
+    "npm": ">=6.8.0"
   },
   "scripts": {
     "format": "prettier --write **/*.{js,json} && standard --fix",
@@ -17,19 +21,26 @@
   "files": [
     "src",
     "LICENSE",
-    "readme.md",
+    "README.md",
     "docs",
     "bin"
   ],
-  "license": "MIT",
+  "keywords": [
+    "cli-app",
+    "cli",
+    "imba",
+    "parcel",
+    "webpack"
+  ],
   "dependencies": {
     "execa": "^1.0.0",
-    "gluegun": "^2.1.0"
+    "gluegun": "^2.1.0",
+    "update-notifier": "^3.0.1"
   },
   "devDependencies": {
-    "standard": "^12.0.1",
+    "jest": "^23.6.0",
     "prettier": "^1.12.1",
-    "jest": "^23.6.0"
+    "standard": "^12.0.1"
   },
   "jest": {
     "testEnvironment": "node"

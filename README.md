@@ -6,12 +6,13 @@ A generator to create a new [Imba](https://github.com/imba/imba) project, so don
 
 Ideas comes from [create-react-app](https://github.com/facebook/create-react-app) and [vue-cli](https://github.com/vuejs/vue-cli).
 
-### How to use:
+## Install
+```
+$ npm install -g start-imba
+```
 
-> Make sure you already have NodeJS installed on your pc.
+## Usage
 
-- Open your terminal.
-- Run `npm install -g start-imba` or `yarn global add start-imba`.
 - To make new project, just type `start-imba project-name` or `start-imba create project-name`.
 - Select a few options, and done.
 
@@ -20,18 +21,15 @@ Ideas comes from [create-react-app](https://github.com/facebook/create-react-app
 
 ### How to contribute:
 
-> Make sure you already have NodeJS installed on your pc.
-
-- Open your terminal.
 - Run `git clone https://github.com/athif23/start-imba.git`
 - Install the dependencies `cd start-imba && npm install`
 - Link the app `npm link` or `yarn link`, so you can test it.
 
-If you want to add some extension or have some issues related to the cli, check out [gluegun](https://infinitered.github.io/gluegun/).
+Go check out [gluegun](https://infinitered.github.io/gluegun/), to know more about the CLI.
 
 > If you find any issue with the app, feels free to file a [new issue](https://github.com/athif23/start-imba/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc).
 
-#### A few things to do:
+#### Things to do:
 
 - [x] Create `parcel` template.
 - [x] Create more option for the app, so people can choose different tools they want to use with Imba.
@@ -42,5 +40,4 @@ If you want to add some extension or have some issues related to the cli, check 
 
 # License
 
-MIT - see LICENSE
-
+MIT - see [LICENSE](LICENSE)

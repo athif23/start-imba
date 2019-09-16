@@ -1,4 +1,8 @@
 const { build } = require('gluegun')
+const updateNotifier = require('update-notifier');
+const pkg = require('./package.json');
+ 
+updateNotifier({pkg}).notify();
 
 /**
  * Create the cli and kick it off
