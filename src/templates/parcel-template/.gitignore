@@ -1,0 +1,10 @@
+# Folders
+node_modules
+public/**
+!public/.gitkeep
+.git
+.cache
+.vscode
+
+# Files
+package-lock.json
