@@ -3,9 +3,7 @@
   "version": "0.1.0",
   "description": "Project generator for imba",
   "license": "MIT",
-  "bin": {
-    "start-imba": "bin/start-imba"
-  },
+  "bin": "bin/start-imba",
   "engines": {
     "node": ">=8",
     "npm": ">=6.8.0"

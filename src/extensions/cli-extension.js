@@ -60,6 +60,7 @@ module.exports = toolbox => {
 
 	// Create a new imba project
 	toolbox.runCreate = async (name, parameters) => {
+		// Make sure it's a string
 		const cliVersion = require(`../../package.json`).version
 		const {
 			print: { warning, info },
@@ -121,7 +122,7 @@ module.exports = toolbox => {
 		logWithSpinner(`📁`, `Creating project in ${yellow(createdDirPath)}.`)
 
 		toolbox.checkDirExists(createdDirPath)
-		await toolbox.generateTemplate(name, bundler_type, installation)
+		await toolbox.generateTemplate(`${name}`, bundler_type, installation)
 
 		stopSpinner()
 		if (hasGit() && git) {

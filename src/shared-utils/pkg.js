@@ -4,7 +4,7 @@ exports.parcelPkg = {
 		'serve': 'parcel source/index.html -d public/'
 	},
 	dependencies: {
-		'imba': 'github:pushqrdx/imba'
+		'imba': '1.4.7'
 	},
 	devDependencies: {
 		'sass': '^1.16.1',
@@ -20,7 +20,7 @@ exports.webpackPkg = {
 	    "watch": "webpack --watch --progress --colors --display-modules"
 	},
 	dependencies: {
-	    "imba": "1.4.1",
+	    "imba": "1.4.7",
 		"css-loader": "^1.0.1",
 	    "extract-text-webpack-plugin": "^4.0.0-beta.0",
 	    "normalize-scss": "^7.0.1",
