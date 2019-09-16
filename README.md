@@ -8,12 +8,15 @@ Ideas comes from [create-react-app](https://github.com/facebook/create-react-app
 
 ### How to use:
 
-- Open terminal.
+> Make sure you already have NodeJS installed on your pc.
+
+- Open your terminal.
 - Run `npm install -g start-imba` or `yarn global add start-imba`.
 - To make new project, just type `start-imba project-name` or `start-imba create project-name`.
 - Select a few options, and done.
 
-  > By default `start-imba` use yarn, it would check if you have yarn or not, if not it would install using `npm`.
+
+> By default `start-imba` use yarn, it would check if you have yarn or not, if not it would install using `npm`.
 
 ### How to contribute:
 
@@ -26,7 +29,7 @@ Ideas comes from [create-react-app](https://github.com/facebook/create-react-app
 
 If you want to add some extension or have some issues related to the cli, check out [gluegun](https://infinitered.github.io/gluegun/).
 
-  > If you find any issue with the app, feels free to file a [new issue](https://github.com/athif23/start-imba/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc).
+> If you find any issue with the app, feels free to file a [new issue](https://github.com/athif23/start-imba/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc).
 
 #### A few things to do:
 
