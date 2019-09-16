@@ -18,6 +18,7 @@
     "snapupdate": "jest --updateSnapshot",
     "coverage": "jest --coverage"
   },
+  "bugs": "https://github.com/athif23/start-imba/issues",
   "files": [
     "src",
     "LICENSE",
