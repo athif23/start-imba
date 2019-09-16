@@ -5,7 +5,7 @@ const spinner = ora()
 let lastMsg = null
 
 exports.logWithSpinner = (symbol, msg) => {
-  if (!msg) {
+  if (!symbol) {
     msg = symbol
     symbol = chalk.green('✔')
   }

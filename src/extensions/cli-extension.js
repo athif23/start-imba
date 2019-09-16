@@ -70,33 +70,40 @@ module.exports = toolbox => {
 		const askProjectName = {
 			type: 'input',
 			name: 'project_name',
-			message: 'Name of the project?'
+			message: 'Name of the project ?'
 		}
 
 		const askBundlerType = {
 			type: 'list',
 			name: 'bundler_type',
-			message: 'Bundler to use?',
+			message: 'Bundler to use ?',
 			choices: ['webpack', 'parcel']
 		}
 
 		const askInstallation = {
 			type: 'confirm',
 			name: 'installation',
-			message: 'Install the project?'
+			message: 'Install the project ?'
 		}
 
-		let listQuestions = [askBundlerType, askInstallation]
+		const askGit = {
+			type: 'confirm',
+			name: 'git',
+			message: 'Initialize git ?'
+		}
+
+		let listQuestions = [askBundlerType, askInstallation, askGit]
 
 		// Clear the console
-		await clearConsole(`🎮 Imba CLI v${cliVersion}`)
+		await clearConsole(`🎮 Start Imba v${cliVersion}`)
+		info(' ')
 
 		if (name === undefined) {
 			listQuestions.unshift(askProjectName)
 		}
 
 		// Ask the prompt
-		const { project_name, bundler_type, installation } = await prompt.ask(
+		const { project_name, bundler_type, installation, git } = await prompt.ask(
 			listQuestions
 		)
 
@@ -105,7 +112,8 @@ module.exports = toolbox => {
 		}
 
 		// Clear the console again
-		await clearConsole(`🎮 Imba CLI v${cliVersion}`)
+		await clearConsole(`🎮 Start Imba v${cliVersion}`)
+		info(' ')
 
 		const createdDirPath = `${filesystem.cwd()}${filesystem.separator}${name}`
 
@@ -116,16 +124,16 @@ module.exports = toolbox => {
 		await toolbox.generateTemplate(name, bundler_type, installation)
 
 		stopSpinner()
-		if (hasGit()) {
+		if (hasGit() && git) {
 			logWithSpinner(`🗃`, `Initializing git repository...`)
 			process.chdir(createdDirPath)
 			await toolbox.system.run('git init')
 		}
 
 		stopSpinner()
-		if (installation === true) {
+		if (installation) {
 			// Install all the packages
-			info(`🛠  Installing packages. This might take a while...`)
+			info(`🛠 Installing packages. This might take a while...`)
 			await toolbox.installPkg(name, createdDirPath)
 		}
 
