@@ -1,6 +1,6 @@
 # Start Imba
 
-[![License](https://img.shields.io/github/license/athif23/start-imba?style=flat-square)](https://www.npmjs.com/package/start-imba)
+[![License](https://img.shields.io/github/license/athif23/start-imba?style=flat-square)](https://github.com/athif23/start-imba/blob/master/LICENSE) [![Downloads](https://img.shields.io/npm/dm/start-imba?style=flat-square)](https://www.npmjs.com/package/start-imba) [![Code Size](https://img.shields.io/github/languages/code-size/athif23/start-imba?style=flat-square)](https://github.com/athif23/start-imba/)
 
 A generator to create a new [Imba](https://github.com/imba/imba) project, so don't need to configure anything, you just need to focus built the app.
 
