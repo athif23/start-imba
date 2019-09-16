@@ -1,16 +1,12 @@
 const { build } = require('gluegun')
 const updateNotifier = require('update-notifier');
-const pkg = require('../package.json');
- 
-updateNotifier({pkg}).notify();
 
 /**
  * Create the cli and kick it off
  */
 async function run(argv) {
   // create a CLI runtime
-  const cli = build()
-    .brand('start-imba')
+  const cli = build('start-imba')
     .src(__dirname)
     .plugins('./node_modules', { matching: 'start-imba-*', hidden: true })
     .help() // provides default for help, h, --help, -h

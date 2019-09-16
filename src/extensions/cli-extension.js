@@ -8,12 +8,11 @@ const {
 	hasYarn,
 	installDeps
 } = require('../shared-utils')
-const { parcelPkg, webpackPkg } = require('../shared-utils/pkg')
-const cliVersion = require(`../../package.json`).version
 
 module.exports = toolbox => {
 	// Generate a template
 	toolbox.generateTemplate = async (name, bundler_type) => {
+		const { parcelPkg, webpackPkg } = require('../shared-utils/pkg')
 		const { filesystem, template } = toolbox
 		const path = require('path')
 
@@ -61,6 +60,7 @@ module.exports = toolbox => {
 
 	// Create a new imba project
 	toolbox.runCreate = async (name, parameters) => {
+		const cliVersion = require(`../../package.json`).version
 		const {
 			print: { warning, info },
 			filesystem,
