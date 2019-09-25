@@ -10,11 +10,12 @@ Ideas comes from [create-react-app](https://github.com/facebook/create-react-app
 ```
 $ npm install -g start-imba
 ```
+> Or if you have installed it and using `>=0.2.0` you can just run `start-imba update` to update to the latest version.
 
 ## Usage
 
-- To make new project, just type `start-imba <project-name>` or `start-imba create <project-name>`.
-- Select a few options, and done. 
+- To make new project, just type `start-imba <project-name>`. Use `--use-npm` to install using npm.
+- Select a few options, and done.
 
 > See [docs](docs/commands.md) for the complete list.
 
