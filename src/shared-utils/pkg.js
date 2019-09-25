@@ -9,6 +9,7 @@ exports.parcelPkg = {
 	devDependencies: {
 		'sass': '^1.16.1',
 		'parcel-bundler': '^1.10.3',
+		'parcel-plugin-url-loader': '^1.3.1',
 		'parcel-plugin-imba': 'github:shreeve/parcel-plugin-imba'
 	}
 }
@@ -31,6 +32,7 @@ exports.webpackPkg = {
 	    "mini-css-extract-plugin": "^0.8.0",
 		"html-loader": "^0.5.5",
 	    "css-loader": "^3.2.0",
+	    "file-loader": "^4.2.0",
 	    "style-loader": "^0.23.1",
 	    "webpack": "^4.26.0",
 	    "webpack-cli": "^3.1.2"

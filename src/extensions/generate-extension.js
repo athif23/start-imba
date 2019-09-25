@@ -72,7 +72,10 @@ module.exports = toolbox => {
 			await toolbox.patching.patch(indexFile, { delete: '<script src="./index.imba"></script>' })
 
 			// Patch webpack.config.js
-			await toolbox.patching.patch(webpackConfig, { insert: `, '${stylesheet_type.webpackLoader}'`, after: `'css-loader'` })
+			if (stylesheet_type.webpackLoader !== "") {
+				// To handle for 'css' type loader, as we don't add any thing to it.
+				await toolbox.patching.patch(webpackConfig, { insert: `, '${stylesheet_type.webpackLoader}'`, after: `'css-loader'` })
+			}
 			await toolbox.patching.replace(webpackConfig, `".css"`, `".${stylesheet_type.fileType}"`)
 			await toolbox.patching.replace(webpackConfig, `index.css"`, `index.${stylesheet_type.fileType}"`)
 			await toolbox.patching.replace(webpackConfig, `.css$/`, stylesheet_type.regex)
