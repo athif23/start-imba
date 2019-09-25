@@ -1,128 +1,44 @@
 const { yellow, gray, cyan, bold } = require('chalk')
-const execa = require('execa')
-const {
-	clearConsole,
-	logWithSpinner,
-	stopSpinner,
-	hasGit,
-	hasYarn,
-	installDeps
-} = require('../shared-utils')
 
 module.exports = toolbox => {
-	// Generate a template
-	toolbox.generateTemplate = async (name, bundler_type) => {
-		const { parcelPkg, webpackPkg } = require('../shared-utils/pkg')
-		const { filesystem, template } = toolbox
-		const path = require('path')
-
-		const parcelTemplatePath = filesystem
-			.cwd(__dirname, '../templates/parcel-template')
-			.cwd()
-
-		const webpackTemplatePath = filesystem
-			.cwd(__dirname, '../templates/webpack-template')
-			.cwd()
-
-		const pkg = {
-			name,
-			version: '0.0.1',
-			private: true,
-			scripts: {},
-			dependencies: {},
-			devDependencies: {}
-		}
-
-		if (bundler_type === 'parcel') {
-			for (let key in parcelPkg) {
-				pkg[key] = parcelPkg[key]
-			}
-		} else {
-			for (let key in webpackPkg) {
-				pkg[key] = webpackPkg[key]
-			}
-		}
-
-		// Current user working directory path
-		const currentPath = filesystem.cwd()
-
-		// Copy all the template to the user current path
-		filesystem.copy(
-			bundler_type === 'parcel' ? parcelTemplatePath : webpackTemplatePath,
-			`${currentPath}${filesystem.separator}${name}`
-		)
-
-		// Generate pkg to package.json
-		const filePath = path.join(currentPath, `${name}/package.json`)
-		filesystem.dir(path.dirname(filePath))
-		filesystem.write(filePath, JSON.stringify(pkg, null, 2))
-	}
-
 	// Create a new imba project
 	toolbox.runCreate = async (name, parameters) => {
-		// Make sure it's a string
+		const { prompt } = require('enquirer')
+		const {	clearConsole, logWithSpinner, stopSpinner, hasGit } = require('../shared-utils')
+
 		const cliVersion = require(`../../package.json`).version
-		const {
-			print: { warning, info },
-			filesystem,
-			prompt
-		} = toolbox
+		const {	print: { warning, info }, filesystem } = toolbox
 
-		const askProjectName = {
-			type: 'input',
-			name: 'project_name',
-			message: 'Name of the project ?'
-		}
+		const useNpm = parameters.options.useNpm || false
+		const command = useNpm ? 'npm' : 'yarn'
 
-		const askBundlerType = {
-			type: 'list',
-			name: 'bundler_type',
-			message: 'Bundler to use ?',
-			choices: ['webpack', 'parcel']
-		}
-
-		const askInstallation = {
-			type: 'confirm',
-			name: 'installation',
-			message: 'Install the project ?'
-		}
-
-		const askGit = {
-			type: 'confirm',
-			name: 'git',
-			message: 'Initialize git ?'
-		}
-
-		let listQuestions = [askBundlerType, askInstallation, askGit]
-
-		// Clear the console
+		// CLEAR CONSOLE ----------
 		await clearConsole(`🎮 Start Imba v${cliVersion}`)
 		info(' ')
 
-		if (name === undefined) {
-			listQuestions.unshift(askProjectName)
-		}
+		// Check if folder exist
+		let createdDirPath = `${filesystem.cwd()}${filesystem.separator}${name}`
+		toolbox.checkDirExists(createdDirPath)
 
-		// Ask the prompt
-		const { project_name, bundler_type, installation, git } = await prompt.ask(
-			listQuestions
-		)
+		// Start the prompts
+		const { project_name, bundler_type, installation, git, css_type } = await toolbox.startAsking(name, parameters)
 
 		if (name === undefined) {
 			name = project_name
+			createdDirPath = `${filesystem.cwd()}${filesystem.separator}${name}`
 		}
 
-		// Clear the console again
+		// Check if folder exist again, after name changed
+		toolbox.checkDirExists(createdDirPath)
+
+		// CLEAR CONSOLE ----------
 		await clearConsole(`🎮 Start Imba v${cliVersion}`)
 		info(' ')
-
-		const createdDirPath = `${filesystem.cwd()}${filesystem.separator}${name}`
 
 		// Generate the template to the target directory
 		logWithSpinner(`📁`, `Creating project in ${yellow(createdDirPath)}.`)
 
-		toolbox.checkDirExists(createdDirPath)
-		await toolbox.generateTemplate(`${name}`, bundler_type, installation)
+		await toolbox.generateTemplate(`${name}`, bundler_type, css_type)
 
 		stopSpinner()
 		if (hasGit() && git) {
@@ -135,7 +51,7 @@ module.exports = toolbox => {
 		if (installation) {
 			// Install all the packages
 			info(`🛠 Installing packages. This might take a while...`)
-			await toolbox.installPkg(name, createdDirPath)
+			await toolbox.installPkg(name, createdDirPath, useNpm)
 		}
 
 		stopSpinner()
@@ -145,20 +61,24 @@ module.exports = toolbox => {
 		info(
 			`🏁 Start with the following commands:\n\n` +
 				cyan(`   ${gray('$')} cd ${name}/\n`) +
-				cyan(`   ${gray('$')} yarn install\n`) +
-				cyan(`   ${gray('$')} yarn serve\n`)
+				cyan(`   ${gray('$')} ${command} install\n`) +
+				cyan(`   ${gray('$')} ${command === 'npm' ? 'npm run' : 'yarn'} serve\n`)
 		)
 		info('')
 	}
 
 	// Installing packages
-	toolbox.installPkg = async (name, dir) => {
+	toolbox.installPkg = async (name, dir, useNPM) => {
+		const {
+			hasYarn,
+			installDeps
+		} = require('../shared-utils')
 		const {
 			print: { info }
 		} = toolbox
 		let command
 
-		if (hasYarn) {
+		if (hasYarn && !useNPM) {
 			command = 'yarn'
 		} else {
 			command = 'npm'
@@ -173,28 +93,9 @@ module.exports = toolbox => {
 		info(
 			`🏁 Start with the following commands:\n\n` +
 				cyan(`   ${gray('$')} cd ${name}\n`) +
-				cyan(`   ${gray('$')} yarn serve`)
+				cyan(`   ${gray('$')} ${command === 'npm' ? 'npm run' : 'yarn'} serve`)
 		)
 		info('')
 		process.exit(1)
-	}
-
-	// Check if directory already exists
-	toolbox.checkDirExists = async dir => {
-		const {
-			print: { warning },
-			filesystem,
-			prompt
-		} = toolbox
-
-		if (filesystem.exists(dir) === 'dir') {
-			clearConsole()
-			warning('⚠️ This project name already exists ⚠ ')
-			warning('')
-			process.exit(1)
-			return false
-		} else {
-			return true
-		}
 	}
 }

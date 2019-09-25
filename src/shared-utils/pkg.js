@@ -21,15 +21,17 @@ exports.webpackPkg = {
 	},
 	dependencies: {
 	    "imba": "1.4.7",
-		"css-loader": "^1.0.1",
 	    "extract-text-webpack-plugin": "^4.0.0-beta.0",
 	    "normalize-scss": "^7.0.1",
-	    "style-loader": "^0.23.1",
 	    "webpack-dev-server": "^3.1.10"
 	},
 	devDependencies: {
-		"node-sass": "^4.10.0",
-	    "sass-loader": "^7.1.0",
+		"clean-webpack-plugin": "^3.0.0",
+		"html-webpack-plugin": "^3.2.0",
+	    "mini-css-extract-plugin": "^0.8.0",
+		"html-loader": "^0.5.5",
+	    "css-loader": "^3.2.0",
+	    "style-loader": "^0.23.1",
 	    "webpack": "^4.26.0",
 	    "webpack-cli": "^3.1.2"
 	}

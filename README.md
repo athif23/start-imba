@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/github/license/athif23/start-imba?style=flat-square)](https://github.com/athif23/start-imba/blob/master/LICENSE) [![Downloads](https://img.shields.io/npm/dm/start-imba?style=flat-square)](https://www.npmjs.com/package/start-imba) [![Code Size](https://img.shields.io/github/languages/code-size/athif23/start-imba?style=flat-square)](https://github.com/athif23/start-imba/)
 
-A generator to create a new [Imba](https://github.com/imba/imba) project, so don't need to configure anything, you just need to focus built the app.
+A generator to create a new [Imba](https://github.com/imba/imba) project easily, don't need to configure anything, you just need to focus built the app.
 
 Ideas comes from [create-react-app](https://github.com/facebook/create-react-app) and [vue-cli](https://github.com/vuejs/vue-cli).
 
@@ -13,11 +13,10 @@ $ npm install -g start-imba
 
 ## Usage
 
-- To make new project, just type `start-imba project-name` or `start-imba create project-name`.
-- Select a few options, and done.
+- To make new project, just type `start-imba <project-name>` or `start-imba create <project-name>`.
+- Select a few options, and done. 
 
-
-> By default `start-imba` use yarn, it would check if you have yarn or not, if not it would install using `npm`.
+> See [docs](docs/commands.md) for the complete list.
 
 ### How to contribute:
 
@@ -31,12 +30,8 @@ Go check out [gluegun](https://infinitered.github.io/gluegun/), to know more abo
 
 #### Things to do:
 
-- [x] Create `parcel` template.
-- [x] Create more option for the app, so people can choose different tools they want to use with Imba.
-- [x] Make the `templates/` better.
 - [ ] Add gif example to show what the real app looks like.
 - [ ] Add more feature like create-react-app or vue-cli.
-- [x] Publish the app to npm.
 
 # License
 

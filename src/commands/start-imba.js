@@ -1,7 +1,7 @@
 module.exports = {
-  name: 'start-imba',
-  run: async toolbox => {
-  	toolbox.runCreate(toolbox.parameters.first)
-  }
+	name: 'start-imba',
+	run: async toolbox => {
+		toolbox.runCreate(toolbox.parameters.first, toolbox.parameters)
+	}
 }
 
