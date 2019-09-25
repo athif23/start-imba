@@ -15,10 +15,11 @@ module.exports = {
   ],
   module: {
 	rules: [
+	  {	test: /\.imba$/, loader: 'imba/loader' },
 	  {
-		test: /\.imba$/,
-		loader: 'imba/loader',
-	  },
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [{ loader: 'file-loader' }],
+      },
 	  {
 		test: /\.html$/,
 		use: [

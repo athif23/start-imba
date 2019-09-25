@@ -1,8 +1,10 @@
+const imba-logo = require('../imba-logo.png')
+
 export tag App
 	def render
 		<self>
 			<div.header>
-				<img src="./imba-logo.png" width=200>
+				<img src=(imba-logo) width=200>
 				<h1.title> "START NOW"
 			<div.content>
 				<p.title> "How to start"
