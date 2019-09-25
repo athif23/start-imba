@@ -1,8 +1,9 @@
 // Manually put this code to parcel's index.imba
 const parcelWarning = `
+
 # ------------ WARNING: DO NOT TOUCH OR CHANGE!
 module:hot.dispose do
-document:body:innerHTML = ''
+	document:body:innerHTML = ''
 # ------------ NEEDED FOR PARCEL!
 `
 

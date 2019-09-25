@@ -8,7 +8,7 @@ export tag App
 				<h1.title> "START NOW"
 			<div.content>
 				<p.title> "How to start"
-				<p.desc> "Go to " 
-					<code> "./src/client.imba"
-					", open in your code editor. Try change something." 
-				<p.desc> "Now, start make something."
+				<p.desc> "Open" 
+					<code> "./source/components/app.imba"
+					" in your code editor and try change it." 
+				<p.desc> "You should see this page changed."
