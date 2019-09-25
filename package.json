@@ -1,6 +1,6 @@
 {
   "name": "start-imba",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Project generator for imba",
   "license": "MIT",
   "bin": "bin/start-imba",
@@ -11,7 +11,7 @@
   "bugs": "https://github.com/athif23/start-imba/issues",
   "scripts": {
     "format": "prettier --write **/*.{js,json} && standard --fix",
-    "build-binary": "pkg . --out-path bin",
+    "build-bin": "pkg . --out-path bin",
     "lint": "standard",
     "watch": "jest --watch",
     "snapupdate": "jest --updateSnapshot",

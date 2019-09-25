@@ -59,7 +59,8 @@ module.exports = toolbox => {
 			case 'LESS':
 				return {
 					package: { 
-						'less-loader': "^5.0.0"
+						'less-loader': "^5.0.0", 
+						'less': "^3.10.3"
 					},
 					webpackLoader: 'less-loader',
 					path: filesystem.cwd(__dirname, '../templates/base-source-template/less').cwd(),
