@@ -42,8 +42,3 @@ exports.pauseSpinner = () => {
 exports.resumeSpinner = () => {
   spinner.start()
 }
-
-// silent all logs except errors during tests and keep record
-if (process.env.VUE_CLI_TEST) {
-  require('./_silence')('spinner', exports)
-}

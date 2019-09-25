@@ -6,7 +6,7 @@ module.exports = toolbox => {
 		const { prompt } = require('enquirer')
 		const {	clearConsole, logWithSpinner, stopSpinner, hasGit } = require('../shared-utils')
 
-		const cliVersion = require(`../../package.json`).version
+		const cliVersion = require('../../package.json').version
 		const {	print: { warning, info }, filesystem } = toolbox
 
 		const useNpm = parameters.options.useNpm || false
