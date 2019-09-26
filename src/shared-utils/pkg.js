@@ -4,7 +4,7 @@ exports.parcelPkg = {
 		'serve': 'parcel source/index.html -d public/'
 	},
 	dependencies: {
-		'imba': '1.4.7'
+		'imba': '1.4.8'
 	},
 	devDependencies: {
 		'sass': '^1.16.1',
