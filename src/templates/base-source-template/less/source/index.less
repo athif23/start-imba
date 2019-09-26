@@ -1,3 +1,36 @@
 @import "./components/app";
 
-@import "https://fonts.googleapis.com/css?family=Gothic+A1:400,700|Black+Han+Sans|Inconsolata:700";
+@font-face {
+	font-family: 'Black Han Sans';
+	font-weight: 700;
+	src: local('Black Han Sans Regular'), local('BlackHanSans-Regular'), url(https://fonts.gstatic.com/s/blackhansans/v8/ea8Aad44WunzF9a-dL6toA8r8nqQSWKmEJKy1nK6J8sYUGdTBHS2osQ.2.woff2) format('woff2');
+}
+@font-face {
+	font-family: 'Inconsolata';
+	font-weight: 700;
+	src: local('Inconsolata Bold'), local('Inconsolata-Bold'), url(https://fonts.gstatic.com/s/inconsolata/v18/QldXNThLqRwH-OJ1UHjlKGHiw71p5_w.woff2) format('woff2');
+}
+@font-face {
+	font-family: 'Gothic A1';
+	font-weight: 400;
+	src: local('Gothic A1 Regular'), local('GothicA1-Regular'), url(https://fonts.gstatic.com/s/gothica1/v8/CSR94z5ZnPydRjlCCwl6aaU4Qt0V05ZAcgT3T1VKO2vL6LbP.0.woff2) format('woff2');
+}
+&:root {
+	--header-font: 'Black Han Sans', sans-serif;
+	--copy-font: 'Gothic A1', sans-serif;
+	--code-font: 'Inconsolata', monospace;
+}
+* {
+	margin: 0;
+	padding: 0;
+}
+h1 {
+	font-family: var(--header-font);
+}
+body {
+	font-family: var(--copy-font);
+	font-weight: regular;
+}
+code {
+	font-family: var(--code-font);
+}
