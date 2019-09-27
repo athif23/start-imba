@@ -10,6 +10,7 @@ module:hot.dispose do
 module.exports = toolbox => {
 	// Generate a template
 	toolbox.generateTemplate = async (name, bundler_type, css_type) => {
+		const latestVersion = require('latest-version');
 		const { parcelPkg, webpackPkg } = require('../shared-utils/pkg')
 		const { filesystem, template } = toolbox
 		const path = require('path')
@@ -32,6 +33,11 @@ module.exports = toolbox => {
 			scripts: {},
 			dependencies: {},
 			devDependencies: {}
+		}
+
+		if (webpackPkg.dependencies['imba'] && parcelPkg.dependencies['imba']) {
+			webpackPkg.dependencies['imba'] = await latestVersion('imba')
+			parcelPkg.dependencies['imba'] = await latestVersion('imba')
 		}
 
 		if (bundler_type === 'parcel') {
