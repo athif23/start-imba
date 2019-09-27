@@ -9,8 +9,9 @@ module:hot.dispose do
 
 module.exports = toolbox => {
 	// Generate a template
-	toolbox.generateTemplate = async (name, bundler_type, css_type) => {
+	toolbox.generateTemplate = async (name, bundler_type, css_type, imba_version = "") => {
 		const latestVersion = require('latest-version');
+		const { semver } = require('gluegun')
 		const { parcelPkg, webpackPkg } = require('../shared-utils/pkg')
 		const { filesystem, template } = toolbox
 		const path = require('path')
@@ -35,7 +36,10 @@ module.exports = toolbox => {
 			devDependencies: {}
 		}
 
-		if (webpackPkg.dependencies['imba'] && parcelPkg.dependencies['imba']) {
+		if (!!semver.valid(imba_version)) {
+			webpackPkg.dependencies['imba'] = `${(imba_version)}`
+			parcelPkg.dependencies['imba'] = `${imba_version}`
+		} else if (webpackPkg.dependencies['imba'] && parcelPkg.dependencies['imba']) {
 			webpackPkg.dependencies['imba'] = await latestVersion('imba')
 			parcelPkg.dependencies['imba'] = await latestVersion('imba')
 		}

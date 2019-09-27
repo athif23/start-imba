@@ -9,6 +9,7 @@ module.exports = toolbox => {
 		const cliVersion = require('../../package.json').version
 		const {	print: { warning, info }, filesystem } = toolbox
 
+		const imbaVersion = parameters.options.imbaVersion || ''
 		const useNpm = parameters.options.useNpm || false
 		const command = useNpm ? 'npm' : 'yarn'
 
@@ -38,7 +39,7 @@ module.exports = toolbox => {
 		// Generate the template to the target directory
 		logWithSpinner(`📁`, `Creating project in ${yellow(createdDirPath)}.`)
 
-		await toolbox.generateTemplate(`${name}`, bundler_type, css_type)
+		await toolbox.generateTemplate(`${name}`, bundler_type, css_type, imbaVersion)
 
 		stopSpinner()
 		if (hasGit() && git) {
