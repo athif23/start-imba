@@ -13,6 +13,7 @@
     "format": "prettier --write **/*.{js,json} && standard --fix",
     "build-bin": "pkg . --out-path bin",
     "lint": "standard",
+    "test": "jest --runInBand",
     "watch": "jest --watch",
     "snapupdate": "jest --updateSnapshot",
     "coverage": "jest --coverage"
@@ -40,8 +41,10 @@
   },
   "devDependencies": {
     "jest": "^23.6.0",
+    "mock-stdin": "^0.3.1",
     "prettier": "^1.12.1",
-    "standard": "^12.0.1"
+    "standard": "^12.0.1",
+    "tempy": "^0.3.0"
   },
   "jest": {
     "testEnvironment": "node"
