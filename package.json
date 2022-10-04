@@ -35,9 +35,9 @@
   "dependencies": {
     "enquirer": "^2.3.2",
     "execa": "^1.0.0",
-    "gluegun": "^4.0.2",
-    "latest-version": "^5.1.0",
-    "update-notifier": "^4.0.0"
+    "gluegun": "^5.0.0",
+    "latest-version": "^6.0.0",
+    "update-notifier": "^6.0.0"
   },
   "devDependencies": {
     "jest": "^23.6.0",
